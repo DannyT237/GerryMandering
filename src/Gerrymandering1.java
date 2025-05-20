@@ -63,6 +63,7 @@ public class Gerrymandering1 {
             }
         }
 
+
         scanner.close();
         return state;
     }
