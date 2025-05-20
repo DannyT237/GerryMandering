@@ -41,9 +41,10 @@ public class Gerrymandering1 {
             System.out.print("Please enter a state without spaces: ");
             state = scanner.nextLine().trim(); // Remove leading/trailing spaces
 
-            try (Scanner scanner1 = new Scanner(new File("districts.txt"))) {
+            try (Scanner scanner1 = new Scanner(new File("src/districts.txt"))) {
                 boolean foundState = false;
                 while (scanner1.hasNextLine()) {
+
                     String line = scanner1.nextLine();
                     String[] parts = line.split(" ");
                     if (parts[0].equalsIgnoreCase(state)) {
@@ -61,6 +62,7 @@ public class Gerrymandering1 {
             } catch (NumberFormatException e) {
                 System.out.println("Invalid data in districts file.");
             }
+
         }
 
 
@@ -73,8 +75,22 @@ public class Gerrymandering1 {
         int totalEligibleVoters = 0;
         boolean foundState = false; // Flag to track if the state is found
         
-        /* I. Replace this comment with your code */
-    
+        try(Scanner scannerdistricts = new Scanner(new File("src/eligibleVoters.txt"))) {
+            while(scannerdistricts.hasNextLine()) {
+                String line = scannerdistricts.nextLine().trim();
+                String[] parts = line.split(  " ");
+                if(parts.length==2&& parts[0].equalsIgnoreCase(state)) {
+                    totalEligibleVoters = Integer.parseInt(parts[1]);
+                    foundState = true;
+                    break;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Districts file not found.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid data in districts file.");
+        }
+
         
         return totalEligibleVoters;
     }
